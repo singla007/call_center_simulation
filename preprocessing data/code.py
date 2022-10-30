@@ -39,6 +39,11 @@ server2_data = data.iloc[200:350]
 server3_data = data.iloc[400:550]
 server4_data = data.iloc[600:750]
 
+server1_data.to_csv("processed_data\server1_data.csv", index=False)
+server2_data.to_csv("processed_data\server2_data.csv", index=False)
+server3_data.to_csv("processed_data\server3_data.csv", index=False)
+server4_data.to_csv("processed_data\server4_data.csv", index=False)
+
 # Statistics
 
 # Average range of service time for server 1
