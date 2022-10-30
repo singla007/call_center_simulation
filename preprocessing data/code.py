@@ -17,8 +17,16 @@ data['arrival_time'] = data['date'] +" " + data['call_started_24hr'].dt.strftime
 # data['arrival_time'] = pd.to_datetime(data['date'], format='%Y-%m-%d') + data['call_started_24hr']
 # print(pd.to_datetime(data['date'], format='%Y-%m-%d'))
 # print(data['call_started_24hr'])
-print(pd.to_datetime(data['arrival_time']))
+data['arrival_time'] = pd.to_datetime(data['arrival_time'])
 
 # print(date(int(data['date'][0])))
 # ts = pd.Timestamp.combine(date(data['date'][0]), time(data['call_started'][0]))
 # print(ts)
+interarrival_time = list()
+interarrival_time.append(pd.Timedelta(data['arrival_time'][0]-data['arrival_time'][0]))
+for i in range(data.shape[0]-1):
+    interarrival_time.append(pd.Timedelta(data['arrival_time'][i+1]-data['arrival_time'][i]))
+
+data['interarrival_time'] = interarrival_time
+
+print(data.describe)
