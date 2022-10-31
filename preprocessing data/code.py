@@ -68,6 +68,11 @@ print("Max and min range of service time in seconds for server 3", max(server3_d
 # Average range of service time for server 4
 print("Max and min range of service time in seconds for server 4", max(server4_data['service_length']), min(server4_data['service_length']))
 
+print("Average service time for server 1",sum(server1_data['service_length'])/150)
+print("Average service time for server 3",sum(server3_data['service_length'])/150)
+print("Average service time for server 4",sum(server4_data['service_length'])/150)
+
+
 print("server1 **********************************************")
 freq_dist = dict()
 for i in server1_data['interarrival_time']:
