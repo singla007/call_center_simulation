@@ -29,7 +29,17 @@ interarrival_time.append(pd.Timedelta(data['arrival_time'][0]-data['arrival_time
 for i in range(data.shape[0]-1):
     interarrival_time.append(pd.Timedelta(data['arrival_time'][i+1]-data['arrival_time'][i]))
 
-data['interarrival_time'] = interarrival_time
+interarrival_time_sec = list()    
+for i in interarrival_time:
+    interarrival_time_sec.append(int(i.total_seconds()/60))
+# print(interarrival_time_sec)
+data['interarrival_time'] = interarrival_time_sec
+
+service_time = list()
+for i in data['service_length']:
+    service_time.append(int(i/60))
+data['service_length'] = service_time
+# print(service_time)
 
 data = data.drop(['date', 'call_started', 'call_started_24hr'], axis=1)
 print(data.columns)
@@ -57,3 +67,83 @@ print("Max and min range of service time in seconds for server 3", max(server3_d
 
 # Average range of service time for server 4
 print("Max and min range of service time in seconds for server 4", max(server4_data['service_length']), min(server4_data['service_length']))
+
+print("server1 **********************************************")
+freq_dist = dict()
+for i in server1_data['interarrival_time']:
+    # i= int(i.total_seconds()/60)
+    if i in freq_dist.keys():
+        freq_dist[i] += 1
+    else:
+        freq_dist[i] = 1
+
+print(len(freq_dist))
+print(freq_dist)
+
+print("Probability")
+total_prob = 0
+for key in freq_dist.keys():
+    print(key,freq_dist[key]/len(server1_data['interarrival_time']))
+    total_prob += freq_dist[key]/len(server1_data['interarrival_time'])
+
+print(total_prob)
+
+print("server2 **********************************************")
+freq_dist = dict()
+for i in server2_data['interarrival_time']:
+    # i= int(i.total_seconds()/60)
+    if i in freq_dist.keys():
+        freq_dist[i] += 1
+    else:
+        freq_dist[i] = 1
+
+print(len(freq_dist))
+print(freq_dist)
+
+print("Probability")
+total_prob = 0
+for key in freq_dist.keys():
+    print(key,freq_dist[key]/len(server2_data['interarrival_time']))
+    total_prob += freq_dist[key]/len(server2_data['interarrival_time'])
+
+print(total_prob)
+
+print("server3 **********************************************")
+freq_dist = dict()
+for i in server3_data['interarrival_time']:
+    # i= int(i.total_seconds()/60)
+    if i in freq_dist.keys():
+        freq_dist[i] += 1
+    else:
+        freq_dist[i] = 1
+
+print(len(freq_dist))
+print(freq_dist)
+
+print("Probability")
+total_prob = 0
+for key in freq_dist.keys():
+    print(key,freq_dist[key]/len(server3_data['interarrival_time']))
+    total_prob += freq_dist[key]/len(server3_data['interarrival_time'])
+
+print(total_prob)
+
+print("server4 **********************************************")
+freq_dist = dict()
+for i in server4_data['interarrival_time']:
+    # i= int(i.total_seconds()/60)
+    if i in freq_dist.keys():
+        freq_dist[i] += 1
+    else:
+        freq_dist[i] = 1
+
+print(len(freq_dist))
+print(freq_dist)
+
+print("Probability")
+total_prob = 0
+for key in freq_dist.keys():
+    print(key,freq_dist[key]/len(server4_data['interarrival_time']))
+    total_prob += freq_dist[key]/len(server4_data['interarrival_time'])
+
+print(total_prob)
