@@ -1,4 +1,4 @@
-call_id,service_length,arrival_time,interarrival_time,server chosen
+call_id,service_length,arrival_time,interarrival_time,server_chosen
 201,5,1/4/2021 12:55,2,S4
 202,1,1/4/2021 13:00,5,S4
 203,2,1/4/2021 13:03,2,S4

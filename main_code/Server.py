@@ -6,9 +6,8 @@ class Server:
         self.__is_fail=0
         self.__server_recovery_time=5
         self.__curr_service_begin = 0
-        self.__curr_service_end_at=0
+        self.__next_service_available_at=0
         self.__total_server_busy_time=0
-        print("inside server init")
 
     def is_busy(self):
         return self.__is_busy
@@ -37,11 +36,11 @@ class Server:
     def set_curr_service_begin(self, curr_service_begin):
         self.__curr_service_begin = curr_service_begin
 
-    def get_curr_service_end_at(self):
-        return self.__curr_service_end_at
+    def get_next_service_available_at(self):
+        return self.__next_service_available_at
 
-    def set_curr_service_end_at(self, curr_service_end_at):
-        self.__curr_service_end_at = curr_service_end_at
+    def set_next_service_available_at(self, next_service_available_at):
+        self.__next_service_available_at = next_service_available_at
 
     def get_total_server_busy_time(self):
         return self.__total_server_busy_time
