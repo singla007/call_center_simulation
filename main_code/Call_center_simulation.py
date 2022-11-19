@@ -24,18 +24,21 @@ def call_centre():
     Server1_available = False
     Server2_available = False
     total_wait_time = 0
-    # total_service_time_at_server_1 = 0
-    # total_service_time_at_server_2 = 0
-    # totalWaitingTime_at_server1 = 0
-    format = "%Y-%m-%d %H:%M:%S"
-    server1_data = pd.read_csv("./processed_data/server1_data.csv")
-    server2_data = pd.read_csv("./processed_data/server2_data.csv")
+    server1_data = pd.read_csv("./processed_data/server1_data.csv").iloc[:10]
+    server2_data = pd.read_csv("./processed_data/server2_data.csv").iloc[:10]
     server1_service_time = list(server1_data['service_length'])
     server2_service_time = list(server2_data['service_length'])
-    customer_arrival_time = list(server1_data['interarrival_time'])
+    customer_interarrival_time = list(server1_data['interarrival_time'])
+    customer_arrival_time = list()
+    current_arrival_time = 0
+    customer_arrival_time.append(current_arrival_time)
+    for i in interarrival_time:
+        current_arrival_time += i
+        customer_arrival_time.append(i)
     customer_index = 0
     service_index = 0
     custom_timer = 0
+    max_queue_length = 0
     while True:
         # Customer arrival
         total_wait_time += len(waiting_queue1)
@@ -45,8 +48,8 @@ def call_centre():
         if not server1.is_busy and not server2.is_busy and len(waiting_queue1):
             server1.set_curr_service_end_at = custom_timer + server1_service_time[service_index] + server2_service_time[service_index]
             server2.set_curr_service_end_at = custom_timer + server1_service_time[service_index] + server2_service_time[service_index]
-            total_server1_idle_time = server1.set_curr_service_end_at - server1_service_time[service_index]
-            total_server2_idle_time = server2.set_curr_service_end_at - server2_service_time[service_index]
+            total_server1_idle_time = server2_service_time[service_index]
+            total_server2_idle_time = server1_service_time[service_index]
             waiting_queue1.pop(0)
             service_index += 1
         if server1.get_curr_service_end_at() <= custom_timer:
@@ -55,9 +58,12 @@ def call_centre():
             server2.is_busy = False
         if customer_index >= server1_data.shape[0]:
             break
+        if max_queue_length < len(waiting_queue1):
+            max_queue_length = len(waiting_queue1)
         custom_timer += 1 
-    print(total_server1_idle_time)
-    print(total_server2_idle_time)
+        print(waiting_queue1)
+        print(total_server1_idle_time)
+        print(total_server2_idle_time)
 
 
 call_centre()
