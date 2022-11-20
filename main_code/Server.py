@@ -8,12 +8,19 @@ class Server:
         self.__curr_service_begin = 0
         self.__next_service_available_at=0
         self.__total_server_busy_time=0
+        # self.__curr_customer_serving_num = -1
 
     def is_busy(self):
         return self.__is_busy
 
     def set_is_busy(self, is_busy):
-            self.__is_busy = is_busy
+        self.__is_busy = is_busy
+
+    # def get_curr_customer_serving_num():
+    #     return self.__curr_customer_serving_num
+    
+    # def set_curr_customer_serving_num(curr_customer_serving_num):
+    #     self.__curr_customer_serving_num = curr_customer_serving_num
 
     def get_curr_service_time(self):
         return self.__curr_service_time

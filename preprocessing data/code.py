@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import date, time
+import random
 
 
 data = pd.read_csv("Raw data\simulated_call_centre.csv")[:1000]
@@ -48,6 +49,15 @@ server1_data = data.iloc[:150]
 server2_data = data.iloc[200:350]
 server3_data = data.iloc[400:550]
 server4_data = data.iloc[600:750]
+
+server_chosen = list()
+for i in range(150):
+    r1 = random.randint(0, 1)
+    if r1 == 0:
+        server_chosen.append("S3")
+    else:
+        server_chosen.append("S4")
+server2_data['server_chosen'] = server_chosen
 
 server1_data.to_csv("processed_data\server1_data.csv", index=False)
 server2_data.to_csv("processed_data\server2_data.csv", index=False)
