@@ -7,7 +7,7 @@ class Server:
         self.server_recovery_time=5
         self.curr_service_begin = 0
         self.curr_service_end = -1
-        self.next_service_available_at=0
+        self.next_service_available_at = 0
         self.total_server_busy_time=0
         # self.__curr_customer_serving_num = -1
 
@@ -55,4 +55,5 @@ class Server:
 
     def set_total_server_busy_time(self, total_server_busy_time):
         self.total_server_busy_time = total_server_busy_time
+
 

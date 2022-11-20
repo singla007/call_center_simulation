@@ -15,7 +15,7 @@ def call_centre():
     waiting_queue1 = list()
     waiting_queue2 = list()
     record = ""
-    total_server1_service_time = -1
+    total_server1_service_time = 0
     total_server2_service_time = 0
     total_server3_service_time = -1
     total_server4_service_time = -1
@@ -54,6 +54,8 @@ def call_centre():
     max_queue2_length = 0
     print(customer_arrival_time)
     while True:
+        if custom_timer == 14:
+            print("Start")
         print("custom_timer", custom_timer)
         # Adding current wait time
         total_wait_time += len(waiting_queue1)
@@ -63,13 +65,20 @@ def call_centre():
             waiting_queue1.append(customer_index)
             customer_index += 1
 
+        if server1.is_busy:
+            total_server1_service_time += 1
+
+        if server2.is_busy:
+            total_server2_service_time += 1
+
+
         # Checking status of server1
-        if server2.curr_service_begin == custom_timer:
+        if server2.curr_service_begin <= custom_timer:
             server1.is_busy = False
             server2.is_busy = True
 
         # Checking status of server2
-        if server2.get_next_service_available_at() == custom_timer:
+        if server2.get_next_service_available_at() <= custom_timer :
             server2.is_busy = False
             waiting_queue2.append(server_chosen[customer_index_queue2])
             customer_index_queue2 += 1
@@ -89,17 +98,12 @@ def call_centre():
             server2.next_service_available_at = custom_timer + server1_service_time[service_index12] + server2_service_time[service_index12]
             server1.is_busy = True
             server1.curr_service_end = custom_timer + server1_service_time[service_index12]
-            server2.curr_service_begin = server1.curr_service_end
+            server2.curr_service_begin = server1.curr_service_end + 1
             # total_server1_idle_time += server2_service_time[service_index12]
             # total_server2_idle_time += server1_service_time[service_index12]
             waiting_queue1.pop(0)
-            service_index12 += 1
+            # service_index12 += 1
 
-        if server1.is_busy:
-            total_server1_service_time += 1
-
-        if server2.is_busy:
-            total_server2_service_time += 1
 
         if not server3.is_busy and len(waiting_queue2) and waiting_queue2[-1] == 'S3':
             server3.set_next_service_available_at = custom_timer + server3_service_time[service_index3] 
@@ -112,10 +116,6 @@ def call_centre():
             total_server4_service_time += server4_service_time[service_index4] 
             waiting_queue2.pop(0)
             service_index4 += 1
-        
-
-
-
 
         # Checking max queue1 length
         if max_queue1_length < len(waiting_queue1):
